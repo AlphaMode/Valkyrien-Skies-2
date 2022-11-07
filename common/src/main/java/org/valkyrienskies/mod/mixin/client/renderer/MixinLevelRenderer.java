@@ -4,8 +4,6 @@ import static org.valkyrienskies.mod.client.McClientMathUtilKt.transformRenderWi
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.GameRenderer;
@@ -19,7 +17,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.joml.Matrix3f;
 import org.joml.Matrix4d;
+import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -119,10 +119,10 @@ public abstract class MixinLevelRenderer {
             // textures, so we need to update its matrices otherwise the block damage texture looks wrong)
             final OverlayVertexConsumerAccessor vertexConsumerAccessor = (OverlayVertexConsumerAccessor) vertexConsumer;
 
-            final Matrix3f newNormalMatrix = matrixStack.last().normal().copy();
+            final Matrix3f newNormalMatrix = new Matrix3f(matrixStack.last().normal());
             newNormalMatrix.invert();
 
-            final Matrix4f newModelMatrix = matrixStack.last().pose().copy();
+            final Matrix4f newModelMatrix = new Matrix4f(matrixStack.last().pose());
             // newModelMatrix.invert(); // DISABLED because Matrix4f.invert() doesn't work! Mojang code SMH >.<
             final Matrix4d newModelMatrixAsJoml = VectorConversionsMCKt.toJOML(newModelMatrix);
             newModelMatrixAsJoml.invert();

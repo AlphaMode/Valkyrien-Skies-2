@@ -55,6 +55,7 @@
     "client.MixinGame",
     "client.MixinMinecraft",
     "client.multiplayer.MixinClientPacketListener",
+    "client.packets.MixinClientHandshakePacketListenerImpl",
     "client.player.MixinLocalPlayer",
     "client.renderer.MixinGameRenderer",
     "client.renderer.MixinLevelRenderer",

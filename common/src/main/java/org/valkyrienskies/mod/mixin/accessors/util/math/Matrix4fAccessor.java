@@ -1,10 +1,10 @@
 package org.valkyrienskies.mod.mixin.accessors.util.math;
 
-import com.mojang.math.Matrix4f;
+import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(Matrix4f.class)
+@Mixin(value = Matrix4f.class, remap = false)
 public interface Matrix4fAccessor {
     // region Setters
     @Accessor("m00")

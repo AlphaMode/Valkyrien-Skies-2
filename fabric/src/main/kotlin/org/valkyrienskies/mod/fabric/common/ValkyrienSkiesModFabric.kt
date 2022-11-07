@@ -5,6 +5,7 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper
 import net.fabricmc.loader.api.FabricLoader
@@ -18,7 +19,7 @@ import net.minecraft.util.profiling.ProfilerFiller
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.item.BlockItem
-import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.CreativeModeTabs
 import net.minecraft.world.item.Item.Properties
 import net.minecraft.world.level.block.Block
 import org.valkyrienskies.core.hooks.CoreHooks
@@ -48,9 +49,9 @@ class ValkyrienSkiesModFabric : ModInitializer {
 
     override fun onInitialize() {
         ValkyrienSkiesMod.TEST_CHAIR = TestChairBlock
-        ValkyrienSkiesMod.SHIP_CREATOR_ITEM = ShipCreatorItem(Properties().tab(CreativeModeTab.TAB_MISC), 1.0)
-        ValkyrienSkiesMod.SHIP_ASSEMBLER_ITEM = ShipAssemblerItem(Properties().tab(CreativeModeTab.TAB_MISC))
-        ValkyrienSkiesMod.SHIP_CREATOR_ITEM_SMALLER = ShipCreatorItem(Properties().tab(CreativeModeTab.TAB_MISC), 0.5)
+        ValkyrienSkiesMod.SHIP_CREATOR_ITEM = ShipCreatorItem(Properties(), 1.0)
+        ValkyrienSkiesMod.SHIP_ASSEMBLER_ITEM = ShipAssemblerItem(Properties())
+        ValkyrienSkiesMod.SHIP_CREATOR_ITEM_SMALLER = ShipCreatorItem(Properties(), 0.5)
         ValkyrienSkiesMod.SHIP_MOUNTING_ENTITY_TYPE = EntityType.Builder.of(
             ::ShipMountingEntity,
             MobCategory.MISC
@@ -72,6 +73,12 @@ class ValkyrienSkiesModFabric : ModInitializer {
         ValkyrienSkiesMod.init(vsCore)
 
         registerBlockAndItem("test_chair", ValkyrienSkiesMod.TEST_CHAIR)
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TAB_FUNCTIONAL).register({
+            it.prepend(ValkyrienSkiesMod.SHIP_CREATOR_ITEM)
+            it.prepend(ValkyrienSkiesMod.SHIP_ASSEMBLER_ITEM)
+            it.prepend(ValkyrienSkiesMod.SHIP_CREATOR_ITEM_SMALLER)
+            it.prepend(ValkyrienSkiesMod.TEST_CHAIR)
+        })
         Registry.register(
             Registry.ITEM, ResourceLocation(ValkyrienSkiesMod.MOD_ID, "ship_assembler"),
             ValkyrienSkiesMod.SHIP_ASSEMBLER_ITEM
@@ -145,7 +152,7 @@ class ValkyrienSkiesModFabric : ModInitializer {
         )
         Registry.register(
             Registry.ITEM, ResourceLocation(ValkyrienSkiesMod.MOD_ID, registryName),
-            BlockItem(block, Properties().tab(CreativeModeTab.TAB_MISC))
+            BlockItem(block, Properties())
         )
     }
 

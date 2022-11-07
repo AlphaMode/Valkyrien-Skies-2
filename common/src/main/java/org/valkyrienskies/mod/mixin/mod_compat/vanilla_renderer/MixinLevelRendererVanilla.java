@@ -6,8 +6,6 @@ import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexBuffer;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import java.util.List;
@@ -25,6 +23,7 @@ import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix4f;
 import org.joml.Vector3dc;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -265,7 +264,7 @@ public class MixinLevelRendererVanilla {
             vertexBuffer.draw();
         }
         if (uniform != null) {
-            uniform.set(Vector3f.ZERO);
+            uniform.set(0.0F, 0.0F, 0.0F);
         }
         shaderInstance.clear();
         VertexBuffer.unbind();

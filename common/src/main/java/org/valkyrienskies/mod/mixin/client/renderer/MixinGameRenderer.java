@@ -1,7 +1,6 @@
 package org.valkyrienskies.mod.mixin.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
 import java.util.function.Predicate;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -15,6 +14,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaterniond;
+import org.joml.Quaternionf;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
 import org.spongepowered.asm.mixin.Final;
@@ -226,7 +226,7 @@ public abstract class MixinGameRenderer {
     @Inject(
         method = "renderLevel",
         at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/client/renderer/LevelRenderer;renderLevel(Lcom/mojang/blaze3d/vertex/PoseStack;FJZLnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lcom/mojang/math/Matrix4f;)V")
+            target = "Lnet/minecraft/client/renderer/LevelRenderer;renderLevel(Lcom/mojang/blaze3d/vertex/PoseStack;FJZLnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lorg/joml/Matrix4f;)V")
     )
     private void preRenderLevelInRenderLevel(final float partialTicks, final long finishTimeNano,
         final PoseStack matrixStack,
@@ -263,7 +263,7 @@ public abstract class MixinGameRenderer {
             playerShipMountedTo,
             inShipPos
         );
-        final Quaternion invShipRenderRotation = VectorConversionsMCKt.toMinecraft(
+        final Quaternionf invShipRenderRotation = VectorConversionsMCKt.toMinecraft(
             playerShipMountedTo.getRenderTransform().getShipCoordinatesToWorldCoordinatesRotation()
                 .conjugate(new Quaterniond()));
         matrixStack.mulPose(invShipRenderRotation);

@@ -1,7 +1,5 @@
 package org.valkyrienskies.mod.mixin.client;
 
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 import net.minecraft.client.Camera;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -9,8 +7,10 @@ import net.minecraft.world.level.BlockGetter;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Quaterniond;
 import org.joml.Quaterniondc;
+import org.joml.Quaternionf;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
+import org.joml.Vector3f;
 import org.joml.primitives.AABBi;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -45,7 +45,7 @@ public abstract class MixinCamera implements IVSCamera {
     private float yRot;
     @Shadow
     @Final
-    private Quaternion rotation;
+    private Quaternionf rotation;
     @Shadow
     private boolean detached;
     @Shadow
@@ -106,10 +106,10 @@ public abstract class MixinCamera implements IVSCamera {
         this.yRot = yaw;
         VectorConversionsMCKt.set(this.rotation, newRotation);
         this.forwards.set(0.0F, 0.0F, 1.0F);
-        this.forwards.transform(this.rotation);
+        this.forwards.rotate(this.rotation);
         this.up.set(0.0F, 1.0F, 0.0F);
-        this.up.transform(this.rotation);
+        this.up.rotate(this.rotation);
         this.left.set(1.0F, 0.0F, 0.0F);
-        this.left.transform(this.rotation);
+        this.left.rotate(this.rotation);
     }
 }
