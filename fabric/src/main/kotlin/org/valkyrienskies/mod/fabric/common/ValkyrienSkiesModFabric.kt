@@ -73,7 +73,7 @@ class ValkyrienSkiesModFabric : ModInitializer {
         ValkyrienSkiesMod.init(vsCore)
 
         registerBlockAndItem("test_chair", ValkyrienSkiesMod.TEST_CHAIR)
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TAB_FUNCTIONAL).register({
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TAB_TOOLS).register({
             it.prepend(ValkyrienSkiesMod.SHIP_CREATOR_ITEM)
             it.prepend(ValkyrienSkiesMod.SHIP_ASSEMBLER_ITEM)
             it.prepend(ValkyrienSkiesMod.SHIP_CREATOR_ITEM_SMALLER)
