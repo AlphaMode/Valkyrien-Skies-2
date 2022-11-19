@@ -142,7 +142,7 @@ public abstract class MixinLevelRendererVanilla {
         ),
         method = "*"
     )
-    private void redirectRenderChunkLayer(
+    private void redirectRenderChunkLayer(final LevelRenderer receiver,
         final RenderType renderType, final PoseStack poseStack, final double d, final double e, final double f,
         final Matrix4f matrix4f) {
 
