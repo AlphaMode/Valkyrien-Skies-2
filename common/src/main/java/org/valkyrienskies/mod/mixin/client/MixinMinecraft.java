@@ -114,14 +114,6 @@ public abstract class MixinMinecraft
         }
     }
 
-    @Inject(
-        method = "setCurrentServer",
-        at = @At("HEAD")
-    )
-    public void preSetCurrentServer(final ServerData serverData, final CallbackInfo ci) {
-        ValkyrienSkiesMod.getVsCore().setClientUsesUDP(false);
-    }
-
     @Override
     public void createShipObjectWorldClient() {
         if (shipObjectWorld != null) {

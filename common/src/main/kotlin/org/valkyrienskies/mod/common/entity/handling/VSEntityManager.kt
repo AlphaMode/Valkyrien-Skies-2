@@ -1,6 +1,6 @@
 package org.valkyrienskies.mod.common.entity.handling
 
-import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EntityType
 import org.valkyrienskies.core.networking.simple.sendToClient
@@ -52,8 +52,8 @@ object VSEntityManager {
 
     // Sends a packet with all the entity -> handler pairs to the client
     fun syncHandlers(player: MinecraftPlayer) {
-        PacketSyncVSEntityTypes(Array(Registry.ENTITY_TYPE.count()) {
-            val handler = getHandler(Registry.ENTITY_TYPE.byId(it))
+        PacketSyncVSEntityTypes(Array(BuiltInRegistries.ENTITY_TYPE.count()) {
+            val handler = getHandler(BuiltInRegistries.ENTITY_TYPE.byId(it))
             namedEntityHandlers[handler].toString()
         }).sendToClient(player)
     }

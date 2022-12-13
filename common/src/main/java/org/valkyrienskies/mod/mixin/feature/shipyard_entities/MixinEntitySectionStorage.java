@@ -1,7 +1,7 @@
 package org.valkyrienskies.mod.mixin.feature.shipyard_entities;
 
-import java.util.function.Consumer;
 import net.minecraft.core.SectionPos;
+import net.minecraft.util.AbortableIterationConsumer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.EntitySection;
@@ -23,7 +23,8 @@ import org.valkyrienskies.mod.mixinducks.world.OfShip;
 public abstract class MixinEntitySectionStorage implements OfLevel {
 
     @Shadow
-    public abstract void forEachAccessibleNonEmptySection(AABB aABB, Consumer<EntitySection<Entity>> consumer);
+    public abstract void forEachAccessibleNonEmptySection(AABB aABB,
+        AbortableIterationConsumer<EntitySection<Entity>> consumer);
 
     @Unique
     private Level level;
@@ -49,7 +50,7 @@ public abstract class MixinEntitySectionStorage implements OfLevel {
     }
 
     @Inject(method = "forEachAccessibleNonEmptySection", at = @At("HEAD"))
-    void shipSections(final AABB aABB, final Consumer<EntitySection<Entity>> consumer,
+    void shipSections(final AABB aABB, final AbortableIterationConsumer<EntitySection<Entity>> consumer,
         final CallbackInfo ci) {
 
         if (level != null && !loopingShips) {
