@@ -133,6 +133,8 @@ public abstract class MixinMinecraftServer implements IShipObjectWorldServerProv
         at = @At("HEAD")
     )
     private void preTick(final CallbackInfo ci) {
+        vsPipeline.preTickGame();
+
         // region Tell the VS world to load new levels, and unload deleted ones
         final Set<String> newLoadedLevels = new HashSet<>();
         for (final ServerLevel level : getAllLevels()) {
@@ -150,8 +152,6 @@ public abstract class MixinMinecraftServer implements IShipObjectWorldServerProv
         }
         loadedLevels = newLoadedLevels;
         // endregion
-
-        vsPipeline.preTickGame();
     }
 
     /**
